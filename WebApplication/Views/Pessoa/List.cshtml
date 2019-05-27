@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebApplication.Models.PessoaModels>
+﻿@model IEnumerable<WebApplication.Models.Pessoa>
 
 @{
     ViewBag.Title = "Lista de Pessoas";
@@ -61,7 +61,7 @@
         </td>
         <td>
             @Html.ActionLink("Editar", "Edit", new { id=item.Codigo }) |
-            @Html.ActionLink("Detalhar", "Details", new { /* id=item.Codigo */ }) |
+            @Html.ActionLink("Detalhar", "Details", new {  id=item.Codigo  }) |
             @Html.ActionLink("Excluir", "Delete", new {  id=item.Codigo  })
         </td>
     </tr>

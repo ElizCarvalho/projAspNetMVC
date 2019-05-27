@@ -6,9 +6,9 @@ using System.Web;
 
 namespace WebApplication.Models
 {
-    public class PessoaModels
+    public class Pessoa
     {
-        [Required]
+        [Key]
         public int Codigo { get; set; }
 
         [Required(ErrorMessage ="CPF é obrigatório.")]
@@ -31,5 +31,9 @@ namespace WebApplication.Models
         [Phone]
         public string Telefone { get; set; }
 
-    }
+		[Required]
+		[MaxLength(100)]
+		public string NomeMae { get; set; }
+
+	}
 }

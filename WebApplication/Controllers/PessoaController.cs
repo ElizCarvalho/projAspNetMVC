@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Service.Impl;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,6 +10,7 @@ namespace WebApplication.Controllers
 {
     public class PessoaController : Controller
     {
+
         // GET: Pessoa
         public ActionResult Index()
         {
@@ -25,98 +27,151 @@ namespace WebApplication.Controllers
 
         //POST: Pessoa/Create
         [HttpPost]
-        public ActionResult Create(PessoaModels model)
+        public ActionResult Create(Pessoa model)
         {
             ModelState.Remove("Codigo");
             if (ModelState.IsValid)
             {
-                List<PessoaModels> lista = new List<PessoaModels>();
+				#region Old
+				//List<Pessoa> lista = new List<Pessoa>();
 
-                if (Session["ListaPessoas"] != null)
-                {
-                    lista.AddRange((List<PessoaModels>)Session["ListaPessoas"]);
-                }
-                model.Codigo = lista.Count + 1;
+				//if (Session["ListaPessoas"] != null)
+				//{
+				//    lista.AddRange((List<Pessoa>)Session["ListaPessoas"]);
+				//}
+				//model.Codigo = lista.Count + 1;
 
-                lista.Add(model);
+				//lista.Add(model);
 
-                Session["ListaPessoas"] = lista;
+				//Session["ListaPessoas"] = lista;
 
-                return View("List", lista);
-            }
-            return View(model);
+
+
+				//return View("List", lista);
+				#endregion
+				var _service = new PessoaService();
+				_service.Salvar(model);
+				return View("List", _service.Listar());
+
+			}
+			return View(model);
         }
 
         //GET: Pessoa/List
         [HttpGet]
         public ActionResult List()
         {
-            if (Session["ListaPessoas"] != null)
-            {
-                var model = (List<PessoaModels>)Session["ListaPessoas"];
-                return View(model);
-            }
-            return View(new List<PessoaModels>());  
+			#region Old
+			//if (Session["ListaPessoas"] != null)
+			//{
+			//    var model = (List<Pessoa>)Session["ListaPessoas"];
+			//    return View(model);
+			//}
+			#endregion
+			var _service = new PessoaService();
+            return View(_service.Listar());  
         }
+
+		//GET: Pessoa/Details/5
+		[HttpGet]
+		public ActionResult Details(int id)
+		{
+			//Recuperar o objeto com o id
+			var _service = new PessoaService();
+			var model = _service.Obter(id);
+			if (model != null)
+			{
+				return View("Details", model);
+			}
+
+			return View(_service.Listar());
+		}
 
         //GET: Pessoa/Edit
         [HttpGet]
         public ActionResult Edit (int id)
         {
-            //Recuperar o objeto com o id
-            var model = ((List<PessoaModels>)Session["ListaPessoas"]).Where(x => x.Codigo == id).FirstOrDefault();
-            if (model != null)
-            {
-                //Enviar o objeto encontrada para a view de edição
-                return View("Create", model);
-            }
+			#region Old
+			//Recuperar o objeto com o id
+			//var model = ((List<Pessoa>)Session["ListaPessoas"]).Where(x => x.Codigo == id).FirstOrDefault();
+			//if (model != null)
+			//{
+			//    //Enviar o objeto encontrada para a view de edição
+			//    return View("Create", model);
+			//}
+			#endregion
+			//Recuperar o objeto com o id
+			var _service = new PessoaService();
+			var model = _service.Obter(id);
+			if(model != null)
+			{
+				return View("Create", model);
+			}
 
-            return View("Create", new PessoaModels());
+			return View("Create", new Pessoa());
         }
 
         //POST: Pessoa/Edit/5
         [HttpPost]
-        public ActionResult Edit(PessoaModels model, int id)
+        public ActionResult Edit(Pessoa model, int id)
         {
-            var lista = (List<PessoaModels>)Session["ListaPessoas"];
+			#region Old
+			//var lista = (List<Pessoa>)Session["ListaPessoas"];
 
-            if (lista != null || lista.Count != 0)
-            {
-                //Recuperar o objeto com o id
-                var modelOld = lista.Where(x => x.Codigo == id).FirstOrDefault();
-                if (modelOld != null)
-                {
-                    //Atualiza seu registro com o model enviado por parametro
-                    lista[modelOld.Codigo - 1] = model;
-                }
-                //Retorna para lista com o registro atualizado
-                return View("List", lista);
-            }
-            else
-            {
-                return View("List", new List<PessoaModels>());
-            }
-        }
+			//if (lista != null || lista.Count != 0)
+			//{
+			//    //Recuperar o objeto com o id
+			//    var modelOld = lista.Where(x => x.Codigo == id).FirstOrDefault();
+			//    if (modelOld != null)
+			//    {
+			//        //Atualiza seu registro com o model enviado por parametro
+			//        lista[modelOld.Codigo - 1] = model;
+			//    }
+			//    //Retorna para lista com o registro atualizado
+			//    return View("List", lista);
+			//}
+			//else
+			//{
+			//    return View("List", new List<Pessoa>());
+			//}
+			#endregion
 
-        //POST: Pessoa/Delete/5
-        public ActionResult Delete(int id)
+			if (ModelState.IsValid)
+			{
+				var _service = new PessoaService();
+				_service.Salvar(model);
+				return View("List", _service.Listar());
+
+			}
+			return View(model);
+		}
+
+		//POST: Pessoa/Delete/5
+		public ActionResult Delete(int id)
         {
-            var lista = (List<PessoaModels>)Session["ListaPessoas"];
+			#region Old
+			//var lista = (List<Pessoa>)Session["ListaPessoas"];
 
-            if (lista != null || lista.Count != 0)
-            {
-                //Recuperar o objeto com o id
-                var model = lista.Where(x => x.Codigo == id).FirstOrDefault();
-                if (model != null)
-                {
-                    //Remove o objeto encontrado
-                    lista.Remove(model);
-                    Session["ListaPessoas"] = lista;
+			//if (lista != null || lista.Count != 0)
+			//{
+			//    //Recuperar o objeto com o id
+			//    var model = lista.Where(x => x.Codigo == id).FirstOrDefault();
+			//    if (model != null)
+			//    {
+			//        //Remove o objeto encontrado
+			//        lista.Remove(model);
+			//        Session["ListaPessoas"] = lista;
 
-                    return View("List", lista);
-                }
-            }  
-            return View("List", new List<PessoaModels>());
-        }
-    }
+			//        return View("List", lista);
+			//    }
+			//}  
+			//return View("List", new List<Pessoa>());
+			#endregion
+
+			var _service = new PessoaService();
+			_service.Deletar(id);
+			return View("List", _service.Listar());
+
+		}
+	}
 }
