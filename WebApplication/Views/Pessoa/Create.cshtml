@@ -1,4 +1,4 @@
-﻿@model WebApplication.Models.Pessoa
+﻿@model WebApplication.Models.PessoaViewModel
 
 @{
     ViewBag.Title = "Create";
@@ -71,6 +71,14 @@
 		<div class="col-md-10">
 			@Html.EditorFor(model => model.NomeMae, new { htmlAttributes = new { @class = "form-control" } })
 			@Html.ValidationMessageFor(model => model.NomeMae, "", new { @class = "text-danger" })
+		</div>
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(model => model.Captch, htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.EditorFor(model => model.Captch, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(model => model.Captch, "", new { @class = "text-danger" })
 		</div>
 	</div>
 

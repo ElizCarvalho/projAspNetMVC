@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.2.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Hangfire.Core, Version=1.7.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Hangfire.Core.1.7.3\lib\net46\Hangfire.Core.dll</HintPath>
     </Reference>
@@ -174,12 +177,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CarrinhoComprasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mappers\AutoMapperConfig.cs" />
+    <Compile Include="Mappers\ModelToViewModelProfile.cs" />
+    <Compile Include="Mappers\ViewModelToModelProfile.cs" />
     <Compile Include="Migrations\201905241915356_Start.cs" />
     <Compile Include="Migrations\201905241915356_Start.Designer.cs">
       <DependentUpon>201905241915356_Start.cs</DependentUpon>
@@ -188,15 +195,26 @@
     <Compile Include="Migrations\201905241924251_NomeMae.Designer.cs">
       <DependentUpon>201905241924251_NomeMae.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906071956470_ModelToViewModel.cs" />
+    <Compile Include="Migrations\201906071956470_ModelToViewModel.Designer.cs">
+      <DependentUpon>201906071956470_ModelToViewModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906072056155_Teste0706.cs" />
+    <Compile Include="Migrations\201906072056155_Teste0706.Designer.cs">
+      <DependentUpon>201906072056155_Teste0706.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MyContext.cs" />
     <Compile Include="Models\Pessoa.cs" />
+    <Compile Include="Models\Produto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Impl\PessoaService.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModel\CarrinhoComprasViewModel.cs" />
+    <Compile Include="ViewModel\PessoaViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -256,9 +274,10 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Pessoa\Index.cshtml" />
     <Content Include="Views\Pessoa\CreateOld.cshtml" />
-    <Content Include="Views\Pessoa\List.cshtml" />
     <Content Include="Views\Pessoa\Create.cshtml" />
     <Content Include="Views\Pessoa\Details.cshtml" />
+    <Content Include="Views\Pessoa\List.cshtml" />
+    <Content Include="Views\CarrinhoCompras\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -282,6 +301,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201905241924251_NomeMae.resx">
       <DependentUpon>201905241924251_NomeMae.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906071956470_ModelToViewModel.resx">
+      <DependentUpon>201906071956470_ModelToViewModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906072056155_Teste0706.resx">
+      <DependentUpon>201906072056155_Teste0706.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

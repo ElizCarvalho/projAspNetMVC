@@ -27,7 +27,7 @@ namespace WebApplication.Controllers
 
         //POST: Pessoa/Create
         [HttpPost]
-        public ActionResult Create(Pessoa model)
+        public ActionResult Create(PessoaViewModel model)
         {
             ModelState.Remove("Codigo");
             if (ModelState.IsValid)
@@ -49,10 +49,17 @@ namespace WebApplication.Controllers
 
 				//return View("List", lista);
 				#endregion
-				var _service = new PessoaService();
-				_service.Salvar(model);
-				return View("List", _service.Listar());
+				if(model.Captch == "123#$")
+				{
+					var _service = new PessoaService();
 
+					//Mapeando objeto
+					var pessoaEntity = AutoMapper.Mapper.Map<PessoaViewModel, Pessoa>(model);
+
+					_service.Salvar(pessoaEntity);
+
+					return View("List", _service.Listar());
+				}
 			}
 			return View(model);
         }
@@ -69,7 +76,7 @@ namespace WebApplication.Controllers
 			//}
 			#endregion
 			var _service = new PessoaService();
-            return View(_service.Listar());  
+			return View(_service.Listar());  
         }
 
 		//GET: Pessoa/Details/5
@@ -102,18 +109,20 @@ namespace WebApplication.Controllers
 			#endregion
 			//Recuperar o objeto com o id
 			var _service = new PessoaService();
-			var model = _service.Obter(id);
-			if(model != null)
+			var entity = _service.Obter(id);
+			
+			if (entity != null)
 			{
+				var model = AutoMapper.Mapper.Map<Pessoa, PessoaViewModel>(entity);
 				return View("Create", model);
 			}
 
-			return View("Create", new Pessoa());
+			return View("Create", new PessoaViewModel());
         }
 
         //POST: Pessoa/Edit/5
         [HttpPost]
-        public ActionResult Edit(Pessoa model, int id)
+        public ActionResult Edit(PessoaViewModel model, int id)
         {
 			#region Old
 			//var lista = (List<Pessoa>)Session["ListaPessoas"];
@@ -139,7 +148,8 @@ namespace WebApplication.Controllers
 			if (ModelState.IsValid)
 			{
 				var _service = new PessoaService();
-				_service.Salvar(model);
+				var entity = AutoMapper.Mapper.Map<PessoaViewModel, Pessoa>(model);
+				_service.Salvar(entity);
 				return View("List", _service.Listar());
 
 			}

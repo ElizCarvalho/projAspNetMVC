@@ -15,5 +15,7 @@ namespace WebApplication.Models
 		}
 
 		public DbSet<Pessoa> Pessoa { get; set; }
+
+		public System.Data.Entity.DbSet<WebApplication.Models.PessoaViewModel> PessoaViewModels { get; set; }
 	}
 }
